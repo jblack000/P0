@@ -4,6 +4,7 @@ using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
 using PizzaBox.Domain.Recipes;
 
+
 namespace PizzaBox.Client
 {
   public class Program
@@ -11,11 +12,41 @@ namespace PizzaBox.Client
 
     static void Main(string[] args)
     {
-      // var pizza = MakeChicagoPizza();
+      ATruePizza pizza;
+      Order order = new Order();
+      order.Pizzas = new List<ATruePizza>();
 
-      // var Custom_Pizza = MakeCustomPizza();
+      string response = "";
+      while (response != "b")
+      {
+        System.Console.Write("Select [A] to order a pizza and [B] to quit: ");
+        response = Console.ReadLine();
+        if (response == "a")
+        {
+          pizza = selectPizzaOptions();
+          order.Pizzas.Add(pizza);
 
-      selectPizzaOptions();
+          foreach (var item in order.Pizzas)
+          {
+            System.Console.WriteLine();
+            System.Console.WriteLine($"Size ===> {item.Size.Name}");
+            System.Console.WriteLine($"Crust ===> {item.Crust.Name}");
+            foreach (var i in item.Toppings)
+            {
+              System.Console.WriteLine($"Crust ===> {i.Name}");
+            }
+            System.Console.WriteLine();
+          }
+        }
+        else if (response == "b")
+        {
+          System.Console.WriteLine("Goodbye");
+        }
+
+
+      }
+
+
 
     }
 
@@ -23,9 +54,9 @@ namespace PizzaBox.Client
     {
       System.Console.Write("Please select [A] to order a specialty pizza or [B] to select a custom pizza: ");
       var response = Console.ReadLine();
-      if(response == "a")
+      if (response == "a")
         return MakeChicagoPizza();
-      else 
+      else
         return MakeCustomPizza();
     }
 
@@ -63,7 +94,6 @@ namespace PizzaBox.Client
         System.Console.WriteLine();
         System.Console.Write("Select [Y]es for [N]o: ");
         confirmation = Console.ReadLine();
-        System.Console.WriteLine();
 
       }
 
@@ -108,7 +138,6 @@ namespace PizzaBox.Client
         System.Console.WriteLine();
         System.Console.Write("Select [Y]es for [N]o: ");
         confirmation = Console.ReadLine();
-        System.Console.WriteLine();
       }
 
       return CustomPizza;
